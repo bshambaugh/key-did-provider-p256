@@ -1,4 +1,5 @@
 import { createJWS, decryptJWE, ES256Signer } from 'did-jwt'
+// import { ecdhEsA256KwDecrypter } from 'did-jwt' // did-jwt/src/encrypters/ecdhEsA256Kw.ts
 import { HandlerMethods, RequestHandler, RPCConnection, RPCError, RPCRequest, RPCResponse, createHandler, SendRequestFunc } from 'rpc-utils'
 import type { AuthParams, CreateJWSParams, DecryptJWEParams, DIDMethodName, DIDProviderMethods, DIDProvider, GeneralJWS } from 'dids'
 import stringify from 'fast-json-stable-stringify'
@@ -64,7 +65,8 @@ const didMethods: HandlerMethods<Context, DIDProviderMethods> = {
     return { jws: toGeneralJWS(jws) }
   },
   did_decryptJWE: async ({ secretKey }, params: DecryptJWEParams) => {
-      // this needs to be implemented in the did-jwt library
+     // this needs to be implemented in the did-jwt library
+     // const decrypter = ecdhEsA256KwDecrypter(params.jwe, decrypter)
       throw new RPCError(4100, 'Decryption not supported')
   },
   /*
