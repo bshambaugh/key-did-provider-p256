@@ -32,10 +32,11 @@ interface Context {
 const sign = async (
   payload: Record<string, any> | string,
   did: string,
-  secretKey: Uint8Array,
+  secretKey: Uint8Array, // need special function for remote signer, because private key is remote
   protectedHeader: Record<string, any> = {}
 ) => {
   const kid = `${did}#${did.split(':')[2]}`
+  // need remote signer here as well: https://github.com/decentralized-identity/did-jwt/blob/cebf2e6f255e559a1275bb97b35146ce72ce27f5/docs/guides/index.md#creating-custom-signers-for-integrating-with-hsm
   const signer = ES256Signer(u8a.toString(secretKey, B64)) // look at did-jwt tests to find what ES256Signer requires
   const header = toStableObject(Object.assign(protectedHeader, { kid, alg: 'EdDSA' }))
   return createJWS(typeof payload === 'string' ? payload : toStableObject(payload), signer, header)
