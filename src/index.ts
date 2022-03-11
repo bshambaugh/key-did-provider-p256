@@ -14,7 +14,8 @@ function toStableObject(obj: Record<string, any>): Record<string, any> {
   return JSON.parse(stringify(obj)) as Record<string, any>
 }
 
-// encodeDID from bytes from key-did-creator
+// import function encodeDIDfromBytes from key-did-creator, import as npm module ...
+// https://github.com/bshambaugh/did-key-creator/blob/main/src/encodeDIDkey.ts#L14
 
 function toGeneralJWS(jws: string): GeneralJWS {
   const [protectedHeader, payload, signature] = jws.split('.')
@@ -91,7 +92,7 @@ export class P256Provider implements DIDProvider {
     // const { secretKey, publicKey } = generateKeyPairFromSeed(seed)
     const publicKey = String(kp.getPublic('hex'))
     const secretKey = String(kp.getPrivate('hex'))
-    const did = encodeDID(publicKey)
+    const did = encodeDID(publicKey) // replace with encodeDIDfromBytes from did-key-creator
     const handler = createHandler<Context, DIDProviderMethods>(didMethods)
     this._handle = async (msg) => await handler({ did, secretKey }, msg)
   }
