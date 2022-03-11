@@ -68,7 +68,8 @@ const didMethods: HandlerMethods<Context, DIDProviderMethods> = {
   did_decryptJWE: async ({ secretKey }, params: DecryptJWEParams) => {
      // this needs to be implemented in the did-jwt library
      // const decrypter = ecdhEsA256KwDecrypter(params.jwe, decrypter)
-      throw new RPCError(4100, 'Decryption not supported')
+     // instead of the 4100 Error, emulate the commented out code below...
+     throw new RPCError(4100, 'Decryption not supported')
   },
   /*
   did_decryptJWE: async ({ secretKey }, params: DecryptJWEParams) => {
