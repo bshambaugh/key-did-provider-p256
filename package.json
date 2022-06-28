@@ -63,8 +63,11 @@
   "dependencies": {
     "@stablelib/ed25519": "^1.0.2",
     "did-jwt": "^6.0.0",
+    "did-key-creator": "^0.2.4",
     "fast-json-stable-stringify": "^2.1.0",
+    "key-did-resolver": "^2.0.4",
     "rpc-utils": "^0.6.2",
-    "uint8arrays": "^3.0.0"
+    "uint8arrays": "^3.0.0",
+    "websocket-stream": "^5.5.2"
   }
 }
