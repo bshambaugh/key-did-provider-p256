@@ -91,9 +91,10 @@ const didMethods: HandlerMethods<Context, DIDProviderMethods> = {
 export class P256Provider implements DIDProvider {
   _handle: SendRequestFunc<DIDProviderMethods>
 
-  constructor() {
+  constructor(seed: Uint8Array) {
     // just use the library elliptic to do this...
-    const kp = ec.genKeyPair();
+   // const kp = ec.genKeyPair();
+    const kp = ec.keyFromPrivate(seed)
     // const { secretKey, publicKey } = generateKeyPairFromSeed(seed)
     const publicKey = String(kp.getPublic('hex'))
     //const publicKey = kp.getPublic()
