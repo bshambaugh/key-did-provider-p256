@@ -8,7 +8,7 @@ var didJwt = require('did-jwt');
 var rpcUtils = require('rpc-utils');
 var stringify = _interopDefault(require('fast-json-stable-stringify'));
 var u8a = require('uint8arrays');
-var elliptic = require('elliptic');
+var pkg = _interopDefault(require('elliptic'));
 var didKeyCreator = require('did-key-creator');
 
 function _regeneratorRuntime() {
@@ -365,7 +365,8 @@ function _createClass(Constructor, protoProps, staticProps) {
   return Constructor;
 }
 
-var ec = /*#__PURE__*/new elliptic.ec('p256');
+var EC = pkg.ec;
+var ec = /*#__PURE__*/new EC('p256');
 function toStableObject(obj) {
   return JSON.parse(stringify(obj));
 }

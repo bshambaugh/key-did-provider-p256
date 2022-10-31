@@ -2,7 +2,7 @@ import { ES256Signer, createJWS } from 'did-jwt';
 import { createHandler, RPCError } from 'rpc-utils';
 import stringify from 'fast-json-stable-stringify';
 import { fromString } from 'uint8arrays';
-import { ec as ec$1 } from 'elliptic';
+import pkg from 'elliptic';
 import { compressedKeyInHexfromRaw, rawKeyInHexfromUncompressed, encodeDIDfromHexString } from 'did-key-creator';
 
 function _regeneratorRuntime() {
@@ -359,7 +359,8 @@ function _createClass(Constructor, protoProps, staticProps) {
   return Constructor;
 }
 
-var ec = /*#__PURE__*/new ec$1('p256');
+var EC = pkg.ec;
+var ec = /*#__PURE__*/new EC('p256');
 function toStableObject(obj) {
   return JSON.parse(stringify(obj));
 }
