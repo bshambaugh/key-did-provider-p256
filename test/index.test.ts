@@ -7,9 +7,7 @@ import type { GeneralJWS } from 'dids'
 
 import { P256Provider } from '../src/index'
 
-import { encodeDIDfromHexString} from 'did-key-creator'
-
-// import { rawKeyInHexfromUncompressed, compressedKeyInHexfromRaw } from 'did-key-creator'
+import { compressedKeyInHexfromRaw, encodeDIDfromHexString, rawKeyInHexfromUncompressed} from 'did-key-creator'
 
 import elliptic from 'elliptic'
 
@@ -32,13 +30,12 @@ describe('key-did-provider-p256', () => {
     const seed = randomBytes(32)
     key = secp256r1.keyFromPrivate(seed)
     const publicKey = String(key.getPublic('hex'))
-    //console.log(publicKey)
-   // compressedPublicKey = compressedKeyInHexfromRaw(rawKeyInHexfromUncompressed(publicKey))
-    provider = new P256Provider(seed)
-    // actually this is wrong, the did should be a compressed public key...
-    //did = encodeDIDfromHexString('p256-pub',compressedPublicKey)
-    did = encodeDIDfromHexString('p256-pub',publicKey)
-    //console.log(did)
+    console.log(publicKey)
+    console.log(rawKeyInHexfromUncompressed(publicKey))
+    const compressedPublicKey = compressedKeyInHexfromRaw(rawKeyInHexfromUncompressed(publicKey))
+    console.log(compressedPublicKey)
+    provider = new P256Provider(seed) 
+    did = encodeDIDfromHexString('p256-pub',compressedPublicKey)
  })
 
  it('has isDidProvider property', () => {

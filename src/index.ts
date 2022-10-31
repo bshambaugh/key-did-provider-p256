@@ -1,13 +1,10 @@
 import { createJWS, ES256Signer } from 'did-jwt'
-// import { ecdhEsA256KwDecrypter } from 'did-jwt' // did-jwt/src/encrypters/ecdhEsA256Kw.ts
 import { HandlerMethods, RPCError, RPCRequest, RPCResponse, createHandler, SendRequestFunc } from 'rpc-utils'
 import type { AuthParams, CreateJWSParams, DIDMethodName, DIDProviderMethods, DIDProvider, GeneralJWS } from 'dids'
 import stringify from 'fast-json-stable-stringify'
 import * as u8a from 'uint8arrays'
 import { ec as EC } from 'elliptic'
-import { encodeDIDfromHexString } from 'did-key-creator'
-
-//const B64 = 'base64pad'
+import { compressedKeyInHexfromRaw, encodeDIDfromHexString, rawKeyInHexfromUncompressed} from 'did-key-creator'
 
 const ec = new EC('p256')
 
@@ -39,8 +36,6 @@ const sign = async (
   protectedHeader: Record<string, any> = {}
 ) => {
   const kid = `${did}#${did.split(':')[2]}`
-  // need remote signer here as well: https://github.com/decentralized-identity/did-jwt/blob/cebf2e6f255e559a1275bb97b35146ce72ce27f5/docs/guides/index.md#creating-custom-signers-for-integrating-with-hsm
-  //const signer = ES256Signer(u8a.toString(secretKey, B64)) // look at did-jwt tests to find what ES256Signer requires
   const signer = ES256Signer(secretKey)
   const header = toStableObject(Object.assign(protectedHeader, { kid, alg: 'ES256' }))
   return createJWS(typeof payload === 'string' ? payload : toStableObject(payload), signer, header)
@@ -91,16 +86,13 @@ const didMethods: HandlerMethods<Context, DIDProviderMethods> = {
 export class P256Provider implements DIDProvider {
   _handle: SendRequestFunc<DIDProviderMethods>
 
-  constructor(seed: Uint8Array) {
+  constructor(secretKey: Uint8Array) {
     // just use the library elliptic to do this...
-   // const kp = ec.genKeyPair();
-    const kp = ec.keyFromPrivate(seed)
-    // const { secretKey, publicKey } = generateKeyPairFromSeed(seed)
+    const kp = ec.keyFromPrivate(secretKey)
     const publicKey = String(kp.getPublic('hex'))
-    //const publicKey = kp.getPublic()
-    const secretKey = String(kp.getPrivate('hex'))
-    const privateKey = u8a.fromString(secretKey,'hex')
-    const did = encodeDIDfromHexString('p256-pub',publicKey) // replace with encodeDIDfromBytes from did-key-creator
+    const compressedPublicKey = compressedKeyInHexfromRaw(rawKeyInHexfromUncompressed(publicKey))
+    const privateKey = u8a.fromString(String(kp.getPrivate('hex')),'hex')
+    const did = encodeDIDfromHexString('p256-pub',compressedPublicKey) // replace with encodeDIDfromBytes from did-key-creator
     const handler = createHandler<Context, DIDProviderMethods>(didMethods)
     this._handle = async (msg) => await handler({ did, privateKey }, msg)
   }
