@@ -3,7 +3,9 @@ import { HandlerMethods, RPCError, RPCRequest, RPCResponse, createHandler, SendR
 import type { AuthParams, CreateJWSParams, DIDMethodName, DIDProviderMethods, DIDProvider, GeneralJWS } from 'dids'
 import stringify from 'fast-json-stable-stringify'
 import * as u8a from 'uint8arrays'
-import { ec as EC } from 'elliptic'
+// import { ec as EC } from 'elliptic'
+import pkg from 'elliptic';
+const { ec: EC } = pkg;
 import { compressedKeyInHexfromRaw, encodeDIDfromHexString, rawKeyInHexfromUncompressed} from 'did-key-creator'
 
 const ec = new EC('p256')
