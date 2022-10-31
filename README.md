@@ -1,6 +1,3 @@
-# this is a stub / work in progress
-This does not work yet.
-
 # p256 key did provider
 This is a DID Provider which implements [EIP2844](https://eips.ethereum.org/EIPS/eip-2844) for `did:key:` using P256.
 
