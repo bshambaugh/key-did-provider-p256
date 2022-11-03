@@ -1,5 +1,5 @@
 {
-  "version": "1.5.0",
+  "version": "1.6.0",
   "license": "(Apache-2.0 OR MIT)",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -33,6 +33,14 @@
       "limit": "175 KB"
     }
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bshambaugh/key-did-provider-p256.git"
+  },
+  "homepage": "https://github.com/bshambaugh/key-did-provider-p256",
+  "bugs": {
+    "url": "https://github.com/bshambaugh/key-did-provider-p256/issues"
+  },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^4.6.2",
     "@types/elliptic": "^6.4.14",
