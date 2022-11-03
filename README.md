@@ -28,11 +28,12 @@ const { jws, linkedBlock } = await did.createDagJWS({ hello: 'world' })
 // verify JWS
 await did.verifyJWS(jws)
 
+// JWE is not yet implemented, so it is commented out.
 // create JWE
-const jwe = await did.createDagJWE({ very: 'secret' }, [did.id])
+//const jwe = await did.createDagJWE({ very: 'secret' }, [did.id])
 
 // decrypt JWE
-const decrypted = await did.decryptDagJWE(jwe)
+//const decrypted = await did.decryptDagJWE(jwe)
 ```
 
 ## License

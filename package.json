@@ -1,5 +1,5 @@
 {
-  "version": "1.6.0",
+  "version": "1.6.1",
   "license": "(Apache-2.0 OR MIT)",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
